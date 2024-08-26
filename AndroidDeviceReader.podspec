@@ -11,4 +11,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = "14.0"
   s.source   = { :git => "https://github.com/kelvinjjwong/AndroidDeviceReader.git", :tag => s.version }
   s.source_files = "Sources/AndroidDeviceReader/**/*.swift"
+    
+  s.dependency 'LoggerFactory', '~> 1.1.1'
+  s.dependency 'SharedDeviceLib', '~> 1.0.3'
 end
