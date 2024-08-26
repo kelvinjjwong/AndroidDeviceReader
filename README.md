@@ -1,0 +1,3 @@
+# AndroidDebugBridgeFileReader
+
+`adb` file reader

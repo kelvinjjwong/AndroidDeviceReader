@@ -1,0 +1,24 @@
+{
+  "originHash" : "3b2e25982b4a9d8b18d275ab01995c4fc5f085efb528004d4171415e81dcf01a",
+  "pins" : [
+    {
+      "identity" : "loggerfactory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kelvinjjwong/LoggerFactory",
+      "state" : {
+        "revision" : "b8aee3e1c1b3a198f46a4fb4ea89b70c534bfd0d",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "shareddevicelib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kelvinjjwong/SharedDeviceLib",
+      "state" : {
+        "revision" : "0566d80d3095678bed09336ff3109ea3988c2d86",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 3
+}
