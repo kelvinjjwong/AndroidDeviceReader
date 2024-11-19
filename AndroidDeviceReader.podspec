@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "AndroidDeviceReader"
-  s.version     = "1.0.0"
+  s.version     = "1.0.1"
   s.summary     = "A library for reading files from adb."
   s.homepage    = "https://github.com/kelvinjjwong/AndroidDeviceReader"
   s.license     = { :type => "MIT" }
