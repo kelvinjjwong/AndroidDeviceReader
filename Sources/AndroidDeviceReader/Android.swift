@@ -53,24 +53,24 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-//        self.logger.log(string)
+        self.logger.log(.trace, string)
         if string.range(of: "* failed to start daemon") != nil || string.range(of: "error: cannot connect to daemon") != nil {
             return []
         }
         let lines = string.components(separatedBy: "\n")
         for line in lines {
-//            self.logger.log(line)
+//            self.logger.log(.trace, line)
             if line.range(of: "device usb") != nil {
-//                self.logger.log(line)
+//                self.logger.log(.trace, line)
                 let parts = line.components(separatedBy: " ")
                 if parts[0] != "" {
                     result.append(parts[0])
-                    self.logger.log("device connected: \(parts[0])")
+                    self.logger.log(.trace, "device connected: \(parts[0])")
                 }
             }
         }
-        self.logger.log("\(result.count) device connected")
-//        self.logger.log(result)
+        self.logger.log(.trace, "\(result.count) device connected")
+//        self.logger.log(.trace, result)
         return result
     }
     
@@ -133,7 +133,7 @@ public struct Android {
             device.iccid = iccid
             device.meid = meid
             device.name = marketName
-            self.logger.log("Android connected: \(manufacture) \(model) \(marketName)")
+            self.logger.log(.trace, "Android connected: \(manufacture) \(model) \(marketName)")
             return device
         }else{
             return nil
@@ -185,7 +185,7 @@ public struct Android {
     
     public func existsFile(device id: String, path: String) -> Bool {
         guard isBridgeReady() else {return false}
-        self.logger.log("checking if exists \(id) \(path)")
+        self.logger.log(.trace, "checking if exists \(id) \(path)")
         let pipe = Pipe()
         autoreleasepool { () -> Void in
             let command = Process()
@@ -194,7 +194,7 @@ public struct Android {
             command.launchPath = adb.path
             command.arguments = ["-s", id, "shell", "ls '\(path)'"]
             //command.launch()
-            //self.logger.log(command.isRunning)
+            //self.logger.log(.trace, command.isRunning)
             do {
                 try command.run()
             }catch{
@@ -205,7 +205,7 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-        self.logger.log(string)
+        self.logger.log(.trace, string)
         if string.starts(with: "ls: \(path): No such file or directory") {
             return false
         }
@@ -214,7 +214,7 @@ public struct Android {
     
     public func exists(device id: String, path: String) -> Bool {
         guard isBridgeReady() else {return false}
-        self.logger.log("checking if exists \(id) \(path)")
+        self.logger.log(.trace, "checking if exists \(id) \(path)")
         let pipe = Pipe()
         autoreleasepool { () -> Void in
             let command = Process()
@@ -223,7 +223,7 @@ public struct Android {
             command.launchPath = adb.path
             command.arguments = ["-s", id, "shell", "cd '\(path)'"]
             //command.launch()
-            //self.logger.log(command.isRunning)
+            //self.logger.log(.trace, command.isRunning)
             do {
                 try command.run()
             }catch{
@@ -234,7 +234,7 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-        //self.logger.log(string)
+        //self.logger.log(.trace, string)
         if string.range(of: "No such file or directory") != nil {
             return false
         }
@@ -243,7 +243,7 @@ public struct Android {
     
     public func files(device id: String, in path: String, sortByTime: Bool = true, recursive: Bool = true) -> [PhoneFile] {
         guard isBridgeReady() else {return []}
-        self.logger.log("getting files from \(id) \(path)")
+        self.logger.log(.trace, "getting files from \(id) \(path)")
         var result:[PhoneFile] = []
         let pipe = Pipe()
         autoreleasepool { () -> Void in
@@ -260,7 +260,7 @@ public struct Android {
             }
             command.arguments = ["-s", id, "shell", "cd '\(path)'; \(ls_param)"]
             //command.launch()
-            //self.logger.log(command.isRunning)
+            //self.logger.log(.trace, command.isRunning)
             do {
                 try command.run()
             }catch{
@@ -271,7 +271,7 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-        //self.logger.log(string)
+        //self.logger.log(.trace, string)
         if string == "error: device '\(id)' not found" {
             return []
         }
@@ -285,8 +285,8 @@ public struct Android {
                                             allowedExt: FileTypeRecognizer.allowed,
                                             allowedSuffix: ["_backup_hd"], // wechat chatroom image/video thumbnails
                                             deviceOS: .android)
-        self.logger.log("got \(result.count) files from \(id) \(path)")
-        //self.logger.log("done files")
+        self.logger.log(.trace, "got \(result.count) files from \(id) \(path)")
+        //self.logger.log(.trace, "done files")
         return result
     }
     
@@ -305,7 +305,7 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-        self.logger.log(string)
+        self.logger.log(.trace, string)
         if string != "" {
             let parts = string.components(separatedBy: " ")
             if parts.count > 1 {
@@ -330,7 +330,7 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-        self.logger.log(string)
+        self.logger.log(.trace, string)
         if string != "" {
             let parts = string.components(separatedBy: " ")
             if parts.count > 1 {
@@ -363,7 +363,7 @@ public struct Android {
     }
     
     public func pull(device id: String, from filePath:String, to targetPath:String) -> (Bool, Error?){
-        self.logger.log("pulling from \(filePath) to \(targetPath)")
+        self.logger.log(.trace, "pulling from \(filePath) to \(targetPath)")
         guard isBridgeReady() else {return (false, nil)}
         let pipe = Pipe()
         var err:Error?
@@ -382,7 +382,7 @@ public struct Android {
         }
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
-        self.logger.log(string)
+        self.logger.log(.trace, string)
         pipe.fileHandleForReading.closeFile()
         let lines = string.components(separatedBy: "\n")
         let result = lines.count > 1 ? lines[lines.count - 2] : ""
@@ -410,7 +410,7 @@ public struct Android {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
-        self.logger.log(string)
+        self.logger.log(.trace, string)
         let lines = string.components(separatedBy: "\n")
         let rtn = lines.count > 1 ? lines[lines.count - 2] : ""
         return (rtn, err)
@@ -439,7 +439,7 @@ public struct Android {
     }
     
     public func folders(device id: String, in path: String) -> [String] {
-        self.logger.log("getting folders from \(path)")
+        self.logger.log(.trace, "getting folders from \(path)")
         guard isBridgeReady() else {return []}
         var result:[String] = []
         let pipe = Pipe()
@@ -460,12 +460,12 @@ public struct Android {
         let string:String = String(data: data, encoding: String.Encoding.utf8)!
         pipe.fileHandleForReading.closeFile()
         result = DeviceShell.getFolderNames(from: string)
-        self.logger.log("got \(result.count) folders from \(path)")
+        self.logger.log(.trace, "got \(result.count) folders from \(path)")
         return result
     }
     
     fileprivate func filenamesForReference(device id: String, in path: String, recursive:Bool=false) -> [String:[String]] {
-        self.logger.log("getting folders from \(path)")
+        self.logger.log(.trace, "getting folders from \(path)")
         guard isBridgeReady() else {return [:]}
         var result:[String:[String]] = [:]
         let param = recursive ? " -tR" : ""
@@ -519,7 +519,7 @@ public struct Android {
     }
     
     public func filenames(device id: String, in path: String) -> [String] {
-        self.logger.log("getting folders from \(path)")
+        self.logger.log(.trace, "getting folders from \(path)")
         guard isBridgeReady() else {return []}
         var result:[String] = []
         let pipe = Pipe()
@@ -548,7 +548,7 @@ public struct Android {
                                           allowedExt: FileTypeRecognizer.allowed,
                                           allowedSuffix: ["_backup_hd"], // wechat chatroom image/video thumbnails
                                           deviceOS: .android)
-        self.logger.log("got \(result.count) files from \(path)")
+        self.logger.log(.trace, "got \(result.count) files from \(path)")
         return result
     }
     
