@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "AndroidDeviceReader"
-  s.version     = "1.0.2"
+  s.version     = "1.0.3"
   s.summary     = "A library for reading files from adb."
   s.homepage    = "https://github.com/kelvinjjwong/AndroidDeviceReader"
   s.license     = { :type => "MIT" }
@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.source   = { :git => "https://github.com/kelvinjjwong/AndroidDeviceReader.git", :tag => s.version }
   s.source_files = "Sources/AndroidDeviceReader/**/*.swift"
     
-  s.dependency 'LoggerFactory', '~> 1.1.1'
+  s.dependency 'LoggerFactory', '~> 1.2.0'
   s.dependency 'SharedDeviceLib', '~> 1.0.3'
 end
