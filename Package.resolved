@@ -1,13 +1,13 @@
 {
-  "originHash" : "3b2e25982b4a9d8b18d275ab01995c4fc5f085efb528004d4171415e81dcf01a",
+  "originHash" : "54747ea8ac08af526652e8c6e867b15b8f9181660647e78ce93fca4bae0d6ab7",
   "pins" : [
     {
       "identity" : "loggerfactory",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kelvinjjwong/LoggerFactory",
       "state" : {
-        "revision" : "b8aee3e1c1b3a198f46a4fb4ea89b70c534bfd0d",
-        "version" : "1.1.1"
+        "revision" : "11f9948717978ff74bd03c297012ae2c27280d09",
+        "version" : "1.2.0"
       }
     },
     {
